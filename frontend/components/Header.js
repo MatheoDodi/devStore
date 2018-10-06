@@ -1,9 +1,64 @@
+import Link from 'next/link';
+import styled from 'styled-components';
 import Nav from './Nav';
+import Router from 'next/router';
+import NProgress from 'nprogress';
+
+Router.onRouteChangeStart = () => {
+    NProgress.start();
+}
+Router.onRouteChangeComplete = () => {
+    NProgress.done();
+}
+Router.onRouteChangeError = () => {
+
+}
+
+const Logo = styled.h1`
+    font-size: 4rem;
+    margin-left: 2rem;
+    position: relative;
+    z-index: 2;
+    transform: skew(-12deg);
+    a {
+        padding: 0.5rem 1rem;
+        background: ${props => props.theme.red};
+        color: white;
+        text-decoration: none;
+    }
+    @media (max-width: 1300px) {
+        margin: 0;
+        text-align: center;
+    }
+`;
+
+const StyledHeader =styled.header`
+    .bar {
+        border-bottom: 10px solid ${props => props.theme.black};
+        display: grid;
+        grid-template-columns: auto 1fr;
+        justify-content: space-between;
+        align-items: stretch;
+        @media (max-width: 1300px) {
+            grid-template-columns: 1fr;
+            justify-content: center;
+        }
+    }
+    .sub-bar {
+        display: grid;
+        grid-template-columns: 1fr;
+        border-bottom: 10px solid ${props => props.theme.lightGrey};
+    }
+`
 
 const Header = () => (
-    <div>
+    <StyledHeader>
         <div className="bar">
-            <a href="">Dev Fits</a>
+            <Logo>
+                <Link href="/">
+                    <a>devFits</a>
+                </Link>
+            </Logo>
             <Nav />
         </div>
         <div className="sub-bar">
@@ -12,7 +67,7 @@ const Header = () => (
         <div>
             Cart
         </div>
-    </div>
+    </StyledHeader>
 )
 
 export default Header;
